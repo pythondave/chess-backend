@@ -1,0 +1,15 @@
+{
+  "name": "chess-backend-node-package",
+  "version": "0.0.1",
+  "description": "Backend resources for chess",
+  "_notes": [
+    "What is this file? See: https://docs.nodejitsu.com/articles/getting-started/npm/what-is-the-file-package-json",
+    "This file contains:",
+    "   - ...",
+    "To install the dependencies, do the following: 1. cmd; 2. cd C:\\inetpub\\wwwroot\\chess-backend; 3. npm install",
+    "To update the dependencies do 1 and 2 above and then: 3. npm update"
+  ],
+  "dependencies": {
+    "uci": "*"
+  }
+}
