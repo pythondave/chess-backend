@@ -1,0 +1,13 @@
+{
+  "name": "chess-piece",
+  "description": "Module for representing a chess piece (e.g. a pawn)",
+  "main" : "chess-piece.js",
+  "version": "0.0.1",
+  "_notes": [
+    "..."
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

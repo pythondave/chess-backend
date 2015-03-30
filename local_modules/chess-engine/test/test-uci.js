@@ -1,9 +1,7 @@
 /*
 To see in action:
 
-1. cmd
-2. cd C:\inetpub\wwwroot\chess-backend
-3. node test-uci.js
+1. cmd; 2. cd [chess-backend folder]; 3. node local_modules/chess-engine/test/test-uci.js;
 */
 
 var Engine = require('uci');

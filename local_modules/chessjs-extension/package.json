@@ -1,0 +1,13 @@
+{
+  "name": "chessjs-extension",
+  "description": "Module containing functions which can be used to extend chessjs",
+  "main" : "chessjs-extension.js",
+  "version": "0.0.1",
+  "_notes": [
+    "..."
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

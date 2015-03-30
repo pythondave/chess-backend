@@ -1,0 +1,13 @@
+{
+  "name": "chess-square",
+  "description": "Module for representing a chess square (e.g. the e4 square)",
+  "main" : "chess-square.js",
+  "version": "0.0.1",
+  "_notes": [
+    "..."
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
