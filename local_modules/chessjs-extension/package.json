@@ -7,7 +7,14 @@
     "..."
   ],
   "dependencies": {
+    "lodash": "^3.5.0",
+    "chess.js": "^0.1.0",
+    "chess-file": "file:../chess-file",
+    "chess-piece": "file:../chess-piece",
+    "chess-square": "file:../chess-square"
   },
   "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1"
   }
 }

@@ -1,10 +1,11 @@
 /*
-Tests for chess-file/index.js
+Tests for chess-file.js
 
 To run tests: 1. cmd; 2. cd [chess-backend folder]; 3. mocha local_modules/chess-file/test;
 */
 
 var chai = require('chai');
+var _ = require('lodash');
 var chessFile = require('..');
 
 var expect = chai.expect;
@@ -70,6 +71,10 @@ describe('getNeighboringFileName()', function() {
     expect(chessFile.getNeighboringFileName('a', 7)).to.equal('h');
   });
 
+  it('a offset 8 => undefined', function() {
+    expect(chessFile.getNeighboringFileName('a', 8)).to.be.undefined;
+  });
+
   it('e offset -1 => d', function() {
     expect(chessFile.getNeighboringFileName('e', -1)).to.equal('d');
   });
@@ -83,31 +88,75 @@ describe('getNeighboringFileName()', function() {
   });
 });
 
+describe('isFile()', function() {
+  it('file => true', function() {
+    expect(chessFile.isFile(chessFile.create('e'))).to.be.true;
+  });
+
+  it('fileName => false', function() {
+    expect(chessFile.isFile('e')).to.be.false;
+  });
+
+  it('undefined => false', function() {
+    expect(chessFile.isFile()).to.be.false;
+  });
+
+  it('Invalid file => error', function() {
+    expect(function() { chessFile.isFile(chessFile.create('z')) }).to.throw(Error, 'Invalid name');
+  });
+});
+
 describe('ChessFile', function() {
-  describe('new chessFile.ChessFile(\'e\') - new file object and functions', function() {
-    var file;
-    beforeEach(function() {
-      file = new chessFile.ChessFile('e');
+  describe('Instantiation', function() {
+    describe('No parameters', function() {
+      it('No parameters => error', function() {
+        expect(function() { var file = new chessFile.ChessFile(); }).to.throw(Error, 'No parameters');
+      });
     });
 
-    it('isValid => true', function() {
-      expect(file.isValid()).to.be.true;
+    describe('Using parameter list', function() {
+      it('OK', function() {
+        expect(function() { var file = new chessFile.ChessFile('e'); }).to.be.ok;
+      });
+
+      it('Invalid name => error', function() {
+        expect(function() { var file = new chessFile.ChessFile('z'); }).to.throw(Error, 'Invalid name');
+      });
     });
 
-    it('getNeighboringFile(1).name => f', function() {
-      expect(file.getNeighboringFile(1).name).to.equal('f');
+    describe('Using params object', function() {
+      it('OK', function() {
+        expect(function() { var file = new chessFile.ChessFile({ name: 'e' }); }).to.be.ok;
+      });
+
+      it('Invalid name => error', function() {
+        expect(function() { var file = new chessFile.ChessFile({ name: 'i' }); }).to.throw(Error, 'Invalid name');
+      });
     });
 
-    it('getNeighboringFile(7).isValid => false', function() {
-      expect(file.getNeighboringFile(7).isValid()).to.be.false;
-    });
+    describe('Alternative syntax (create)', function() {
+      it('Same object equivalence', function() {
+        expect(_.isEqual(chessFile.create('e'), new chessFile.ChessFile('e'))).to.be.true;
+      });
 
-    it('getNeighboringFile(7).name => undefined', function() {
-      expect(file.getNeighboringFile(7).name).to.be.undefined;
+      it('Different object non-equivalence', function() {
+        expect(_.isEqual(chessFile.create('e'), new chessFile.ChessFile('f'))).to.be.false;
+      });
     });
   });
 
-  describe('chessFile.create(\'e\') - alternative object instantiation and functions', function() {
+  describe('Properties', function() {
+    var file;
+    beforeEach(function() {
+      file = chessFile.create('e');
+    });
+
+    it('has correct name', function() {
+      expect(file.name).to.equal('e');
+    });
+  });
+
+  describe('Methods', function() {
     var file;
     beforeEach(function() {
       file = chessFile.create('e');
@@ -121,35 +170,12 @@ describe('ChessFile', function() {
       expect(file.getNeighboringFile(1).name).to.equal('f');
     });
 
-    it('getNeighboringFile(7).isValid => false', function() {
-      expect(file.getNeighboringFile(7).isValid()).to.be.false;
+    it('getNeighboringFile(1)', function() {
+      expect(_.isEqual(file.getNeighboringFile(1), new chessFile.ChessFile('f'))).to.be.true;
     });
 
-    it('getNeighboringFile(7).name => undefined', function() {
-      expect(file.getNeighboringFile(7).name).to.be.undefined;
-    });
-  });
-
-  describe('new chessFile.ChessFile(\'z\') - new file object and functions, with invalid params to constructor', function() {
-    var file;
-    beforeEach(function() {
-      file = new chessFile.ChessFile('z');
-    });
-
-    it('isValid => false', function() {
-      expect(file.isValid()).to.be.false;
-    });
-
-    it('name => undefined', function() {
-      expect(file.name).to.be.undefined;
-    });
-
-    it('getNeighboringFile(7).isValid => false', function() {
-      expect(file.getNeighboringFile(7).isValid()).to.be.false;
-    });
-
-    it('getNeighboringFile(7).name => undefined', function() {
-      expect(file.getNeighboringFile(7).name).to.be.undefined;
+    it('getNeighboringFile(7) => error', function() {
+      expect(function() { var newFile = file.getNeighboringFile(7); }).to.throw(Error, 'Invalid name');
     });
   });
 });

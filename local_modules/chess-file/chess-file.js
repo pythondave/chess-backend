@@ -4,13 +4,12 @@ This module contains functions for creating and using a chess file
 Typical usage:
 
   var chessFile = require([path to this module]);
-  var file = chessFile.create([fileName]);
+  var file = chessFile.create('e');
 
-  OR
-
-  var chessFile = require([path to this module]);
-  var file = new chessFile.ChessFile([fileName]);
+See tests and code below for more info.
 */
+
+var _ = require('lodash');
 
 var o = {};
 
@@ -36,21 +35,45 @@ o.getNeighboringFileName = function(fileName, offset) {
 ///
 
 /// file object
-o.ChessFile = function(fileName) {
-  if (!o.isValidName(fileName)) return false;
+o.ChessFile = function(paramsObjectOrFileName) {
+  /*
+    can be instantiated in 2 different ways. e.g.
+      1. ChessFile({ name: 'e' })
+      2. ChessFile('e') //sugar for 1
+  */
+  if (arguments.length == 0) throw new Error('No parameters');
+  if (arguments.length == 1 && _.isPlainObject(paramsObjectOrFileName))
+    return o.createFromParamsObject.call(this, paramsObjectOrFileName); //1
+  if (arguments.length == 1) return o.createFromParameterList.call(this, paramsObjectOrFileName); //2
+  throw new Error('Invalid parameters');
+};
+
+o.create = function(paramsObjectOrFileName) {
+  // sugar for ChessFile
+  var chessFile = Object.create(o.ChessFile.prototype);
+  o.ChessFile.apply(chessFile, arguments);
+  return chessFile;
+};
+
+o.createFromParamsObject = function(paramsObject) {
+  return o.createFromParameterList.call(this, paramsObject.name);
+};
+
+o.createFromParameterList = function(fileName) {
+  if (!o.isValidName(fileName)) throw new Error('Invalid name');
   this.name = fileName;
-  return true;
 };
 
-o.ChessFile.prototype.isValid = function() { return o.isValidName(this.name) };
+o.isFile = function(file) { return (file instanceof o.ChessFile); };
 
+o.ChessFile.prototype.isValidName = function() { return o.isValidName(this.name) };
+o.ChessFile.prototype.isValid = function() { return this.isValidName() };
+o.ChessFile.prototype.getNeighboringFileName = function(offset) {
+  return o.getNeighboringFileName(this.name, offset);
+};
 o.ChessFile.prototype.getNeighboringFile = function(offset) {
-  var neighboringFileName = o.getNeighboringFileName(this.name, offset);
-  return new o.ChessFile(neighboringFileName);
-};
-
-o.create = function(fileName) {
-  return new o.ChessFile(fileName);
+  var neighboringFileName = this.getNeighboringFileName(offset);
+  return o.create(neighboringFileName);
 };
 ///
 
