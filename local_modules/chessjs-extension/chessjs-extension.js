@@ -8,44 +8,21 @@ Recommended usage:
 
 OR (in longhand):
 
-  var chessJs = new require('chess.js');
+  var chessDotJs = new require('chess.js');
   var __base = require('__base');
   var chessjsExtension = require(__base + [path from base to this module]);
-  var chessjs = chessJs.Chess();
+  var chessjs = chessDotJs.Chess();
   chessjs.extension = chessjsExtension(chessjs);
 
 This will attach the functions below to chessjs.extension. This which have minimal impact on chessjs, and therefore minimise potential conflicts.
 
-*** TODO: consider forking chessjs and extending more formally within the fork.
+*** TODO: consider forking chessjs and extending more formally within the fork
+*** TODO: consider how to make the declaration even shorter
 */
 
 var _ = require('lodash');
-var __base = require('__base');
-var chessFile = require(__base + 'local_modules/chess-file');
-var chessPiece = require(__base + 'local_modules/chess-piece');
-var chessSquare = require(__base + 'local_modules/chess-square');
 
 var o = {};
-
-o.doesSquareContainPiece = function(squareParams, pieceParams) {
-  /*
-    can be used in various different ways. e.g.
-      1. various ways of identifying a square (list, plain object x2, square object):
-        a. doesSquareContainPiece('d4', ...)
-        b. doesSquareContainPiece({ name: 'd4' }, ...)
-        c. doesSquareContainPiece({ fileName: 'e', fileOffset: -1, rank: 4 }, ...)
-        d. doesSquareContainPiece(chessSquare.create('d4'), ...)
-      2. various ways of identifying a piece (list, plain object, piece object):
-        a. doesSquareContainPiece(..., 'w', 'p')
-        b. doesSquareContainPiece(..., { color: 'w', type: 'p' })
-        c. doesSquareContainPiece(..., chessPiece.create('w', 'p'))
-  */
-  var square = (chessSquare.isSquare(squareParams) ? squareParams : chessSquare.create(squareParams));
-  var pieceOnSquare = this.chessjs.get(square.name);
-  var pieceArguments = [].slice.call(arguments,1);
-  var pieceToCompare = (chessPiece.isPiece(pieceParams) ? pieceParams : chessPiece.create.apply(this, pieceArguments));
-  return chessPiece.arePiecesEqual(pieceOnSquare, pieceToCompare);
-};
 
 o.getEnPassantSquareName = function() {
   //e.g. returns a square (e.g. 'e3') if standard fen contains an e.p. part, o/w null
@@ -53,27 +30,9 @@ o.getEnPassantSquareName = function() {
   return (standardFenEnPassantPart == '-') ? null : standardFenEnPassantPart;
 };
 
-o.isEnPassantPossible2 = function() {
+o.isEnPassantPossible = function() {
   var moves = o.chessjs.moves({ verbose: true });
   return _.some(moves, { flags: 'e'});
-};
-
-o.isEnPassantPossible = function() {
-  // returns true if en passant is possible, o/w false
-  // *** TODO: test against some positions where the player to move is in check
-  // strategy: identify the squares which e.p. can be made from, if the right color pawn is on one, return true, o/w false
-  var fen = o.chessjs.fen();
-  var enPassantSquare = o.getEnPassantSquareName(fen); // e.g. e3
-  if (enPassantSquare == null) return false; // no potential e.p.
-  var enPassantSquareFile = enPassantSquare[0]; // e.g. 'e'
-  var colorToCheck = o.chessjs.turn(); // e.g. 'b' => black to move, so will need to check for black pawns
-  var rankToCheck = (colorToCheck == 'b' ? 4 : 5); // e.g. check for black pawns on 4th rank
-  var pieceToCheck = { color: colorToCheck, type: 'p' }; // e.g. black pawn
-  var square1ToCheck = chessSquare.deriveSquareName({ fileName: enPassantSquareFile, fileOffset: -1, rank: rankToCheck });
-  var square2ToCheck = chessSquare.deriveSquareName({ fileName: enPassantSquareFile, fileOffset: 1, rank: rankToCheck });
-  if ( square1ToCheck && o.doesSquareContainPiece(square1ToCheck, pieceToCheck) ) return true;
-  if ( square2ToCheck && o.doesSquareContainPiece(square2ToCheck, pieceToCheck) ) return true;
-  return false;
 };
 
 o.loadFlexibleFen = function(str) {

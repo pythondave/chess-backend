@@ -12,12 +12,12 @@
 */
 
 var __base = require('__base');
-var chessJs = new require('chess.js');
+var chessDotJs = new require('chess.js');
 var chessjsExtension = require(__base + 'local_modules/chessjs-extension');
 
 module.exports = function(sequelize, DataTypes) {
   var t = DataTypes;
-  var classChessjs = new chessJs.Chess(); //single chessjs instance for class
+  var classChessjs = new chessDotJs.Chess(); //single chessjs instance for class
   classChessjs.extension = chessjsExtension(classChessjs);
 
   var Position = sequelize.define('Position', {
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
       setChessjs: function() {
         // attach a chessjs instance to the position instance, and related fen - to try to avoid doing this multiple times
         if (this.chessjs) return; // already set
-        this.chessjs = new chessJs.Chess();
+        this.chessjs = new chessDotJs.Chess();
         this.chessjs.extension = chessjsExtension(this.chessjs); // extend chessjs with additional functionality
         if (this.fen) this.chessjs.extension.loadFlexibleFen(this.fen);
       },

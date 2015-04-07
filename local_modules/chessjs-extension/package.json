@@ -9,10 +9,7 @@
   ],
   "dependencies": {
     "lodash": "^3.5.0",
-    "chess.js": "^0.1.0",
-    "chess-file": "file:../chess-file",
-    "chess-piece": "file:../chess-piece",
-    "chess-square": "file:../chess-square"
+    "chess.js": "^0.1.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
