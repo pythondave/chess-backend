@@ -5,7 +5,15 @@ Recommended usage:
 
   var chessjs = new require('chess.js').Chess();
   chessjs.extension = require([path to this module])(chessjs);
-  
+
+OR (in longhand):
+
+  var chessJs = new require('chess.js');
+  var __base = require('__base');
+  var chessjsExtension = require(__base + [path from base to this module]);
+  var chessjs = chessJs.Chess();
+  chessjs.extension = chessjsExtension(chessjs);
+
 This will attach the functions below to chessjs.extension. This which have minimal impact on chessjs, and therefore minimise potential conflicts.
 
 *** TODO: consider forking chessjs and extending more formally within the fork.
@@ -43,6 +51,11 @@ o.getEnPassantSquareName = function() {
   //e.g. returns a square (e.g. 'e3') if standard fen contains an e.p. part, o/w null
   var standardFenEnPassantPart = o.chessjs.fen().split(' ')[3];
   return (standardFenEnPassantPart == '-') ? null : standardFenEnPassantPart;
+};
+
+o.isEnPassantPossible2 = function() {
+  var moves = o.chessjs.moves({ verbose: true });
+  return _.some(moves, { flags: 'e'});
 };
 
 o.isEnPassantPossible = function() {

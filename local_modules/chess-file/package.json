@@ -3,6 +3,7 @@
   "description": "Module for representing a chess file (e.g. the 'e' file)",
   "main" : "chess-file.js",
   "version": "0.0.1",
+  "private": true,
   "_notes": [
     "..."
   ],

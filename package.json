@@ -37,7 +37,8 @@
     "jscs": "^1.11.3",
     "jscs-jsdoc": "^0.4.5",
     "jshint": "^2.6.3",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.1",
+    "mocha-traceur": "^2.1.0"
   },
   "scripts": {
     "postinstall": "mkdir \"./node_modules/__base\" > nul && echo module.exports = require('path').resolve(__dirname + '/../../') + '/'; > \"./node_modules/__base/index.js\""

@@ -1,17 +1,19 @@
 /*
-  Idea: Use this rather than hard-code the status codes
-*/
+  Helper module for other modules in this folder.
 
-var db = require('../../db/db');
+  Idea: Use the status codes from here rather than hard-code them
+*/
+var __base = require('__base');
+var chessDb = require(__base + 'chess-db');
 var winston = require('winston');
 
-var helper = {};
+var o = {};
 
-helper.db = db;
+o.db = chessDb;
 
-helper.log = winston.info;
+o.log = winston.info;
 
-helper.statusCodes = { // http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+o.statusCodes = { // http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
   OK: 200,
   CREATED: 201,
   DELETED: 204, // No Content
@@ -19,10 +21,10 @@ helper.statusCodes = { // http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
   NOT_POSSIBLE: 422 // Unprocessable Entity; See http://stackoverflow.com/a/15818028
 };
 
-helper.standardErrorHandler = function(res) {
+o.standardErrorHandler = function(res) {
   return function(err) {
-    res.status(helper.statusCodes.NOT_POSSIBLE).json(err);
+    res.status(o.statusCodes.NOT_POSSIBLE).json(err);
   };
 };
 
-module.exports = helper;
+module.exports = o;

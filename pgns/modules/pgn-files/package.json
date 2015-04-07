@@ -1,7 +1,7 @@
 {
-  "name": "chess-piece",
-  "description": "Module for representing a chess piece (e.g. a pawn)",
-  "main" : "chess-piece.js",
+  "name": "pgn-files",
+  "description": "Module for working with chess pgn files",
+  "main" : "pgn-files.js",
   "version": "0.0.1",
   "private": true,
   "_notes": [

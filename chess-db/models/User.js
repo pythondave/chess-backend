@@ -12,8 +12,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        User.belongsToMany(models.Position, { as: 'UserPosition', through: 'user_positions', foreignKey: 'userId' });
-        User.belongsToMany(models.Move, { as: 'UserMove', through: 'user_moves', foreignKey: 'userId' });
+        User.belongsToMany(models.Position, { as: 'positions', through: 'user_positions', foreignKey: 'userId' });
+        User.belongsToMany(models.Move, { as: 'moves', through: 'user_moves', foreignKey: 'userId' });
       }
     }
   });

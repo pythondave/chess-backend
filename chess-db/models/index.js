@@ -4,6 +4,7 @@ This files in this folder represent the data model.
 Useful references:
   https://github.com/sequelize/express-example/blob/master/models/index.js - example copied
   http://stackoverflow.com/a/25072476 - associate tips
+  http://stackoverflow.com/a/7470567 - mysql log viewing
 */
 
 var fs = require('fs');
@@ -16,7 +17,7 @@ var database = config.db[env].database;
 var username = config.db[env].username;
 var password = config.db[env].password;
 var sequelize = new Sequelize(database, username, password, config.db);
-var db = {};
+var o = {};
 
 // load models
 fs
@@ -26,19 +27,19 @@ fs
   })
   .forEach(function(file) {
     var model = sequelize.import(__dirname + '/' + file);
-    db[model.name] = model;
+    o[model.name] = model;
   });
 
 // add relationships
-Object.keys(db).forEach(function(modelName) {
-  if ('associate' in db[modelName]) {
-    db[modelName].associate(db);
+Object.keys(o).forEach(function(modelName) {
+  if ('associate' in o[modelName]) {
+    o[modelName].associate(o);
   }
 });
 
 // add additional properties
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+o.sequelize = sequelize;
+o.Sequelize = Sequelize;
 
 //export
-module.exports = db;
+module.exports = o;

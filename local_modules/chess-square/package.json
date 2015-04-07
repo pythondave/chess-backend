@@ -3,6 +3,7 @@
   "description": "Module for representing a chess square (e.g. the e4 square)",
   "main" : "chess-square.js",
   "version": "0.0.1",
+  "private": true,
   "_notes": [
     "..."
   ],

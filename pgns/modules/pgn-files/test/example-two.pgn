@@ -1,0 +1,15 @@
+[Event "Chess Position Trainer"]
+[Site "Chess Position Trainer"]
+[Date "????.??.??"]
+[White "Other"]
+[Black "1."]
+[Result "*"]
+1. e4 d6 2. d4 Nf6 3. Nc3 c6 4. f4 Qa5 5. Bd3 e5 6. Nf3 Bg4 7. Be3 Nbd7 8. O-O Be7 9. h3 Bh5 10. Qd2 *
+
+[Event "Chess Position Trainer"]
+[Site "Chess Position Trainer"]
+[Date "????.??.??"]
+[White "Other"]
+[Black "2."]
+[Result "*"]
+1. e4 d6 2. d4 Nf6 3. Nc3 c6 4. f4 Qa5 5. Bd3 e5 6. Nf3 exd4 7. Nxd4 g6 8. h3 Bg7 9. Be3 O-O 10. Qf3 *

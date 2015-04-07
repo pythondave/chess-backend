@@ -1,0 +1,19 @@
+{
+  "name": "pgn-positions",
+  "description": "Module for deriving positions from pgns",
+  "main" : "pgn-positions.js",
+  "version": "0.0.1",
+  "private": true,
+  "_notes": [
+    "..."
+  ],
+  "dependencies": {
+    "lodash": "^3.5.0",
+    "chess.js": "^0.1.0",
+    "chessjs-extension": "file: ../../../local_modules/chessjs-extension"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1"
+  }
+}

@@ -1,7 +1,9 @@
 var q = require('q');
-var saveJs = require('./save-js');
-var pgnFiles = require('./pgn-files');
-var pgnPositions = require('./pgn-positions');
+var saveJs; // = require('./save-js');
+var pgnFiles = require('../pgn-files');
+var pgnPositions = require('../pgn-positions');
+
+var o = {};
 
 //var pgnInputOutputExample = function() {
   /* examples of use:
@@ -9,7 +11,20 @@ var pgnPositions = require('./pgn-positions');
     node pgn-parser.js -n 1 -i pgns\example.pgn -o example-output.txt
   */
 
-var processPgnFile = function(inputFilename, outputFilename) {
+o.wip = function(inputFilename) {
+  // Read the input file, parse pgn, get all fens-move combinations, write to output file
+  return new Promise(function (resolve, reject) {
+    var info = {};
+    pgnFiles.load(inputFilename).then(function(pgns) { // process
+      resolve(pgnPositions.pgnsToPositionMoves(pgns));
+    })
+    .catch(function(err) {
+      reject(err);
+    });
+  });
+};
+
+o.processPgnFile = function(inputFilename, outputFilename) {
   // Read the input file, parse pgn, get all fens-move combinations, write to output file
 
   var info = {};
@@ -34,6 +49,4 @@ var processPgnFile = function(inputFilename, outputFilename) {
   }).done();
 };
 
-module.exports = {
-  processPgnFile: processPgnFile
-}
+module.exports = o;

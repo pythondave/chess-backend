@@ -1,0 +1,19 @@
+{
+  "name": "pgn",
+  "description": "Module for working with chess pgns",
+  "main" : "pgn.js",
+  "version": "0.0.1",
+  "private": true,
+  "_notes": [
+    "..."
+  ],
+  "dependencies": {
+    "lodash": "^3.5.0",
+    "pgn-files": "file: ../pgn-files",
+    "pgn-positions": "file: ../pgn-positions"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1"
+  }
+}

@@ -1,14 +1,15 @@
 {
-  "name": "chess-piece",
-  "description": "Module for representing a chess piece (e.g. a pawn)",
-  "main" : "chess-piece.js",
+  "name": "chess-db",
+  "description": "Module for creating and accessing a database",
+  "main" : "chess-db.js",
   "version": "0.0.1",
   "private": true,
   "_notes": [
     "..."
   ],
   "dependencies": {
-    "lodash": "^3.5.0"
+    "mysql": "^2.5.5",
+    "sequelize": "^2.0.4"
   },
   "devDependencies": {
     "chai": "^2.2.0",

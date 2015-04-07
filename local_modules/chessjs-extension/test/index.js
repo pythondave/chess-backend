@@ -1,7 +1,7 @@
 /*
 Tests for chessjs-extension.js
 
-To run tests: 1. cmd; 2. cd [chess-backend folder]; 3. mocha local_modules/chessjs-extension/test;
+To run tests: 1. cmd; 2. cd [chess-backend folder]; 3. mocha --compilers js:mocha-traceur local_modules/chessjs-extension/test;
 */
 
 var chai = require('chai');
@@ -49,6 +49,10 @@ describe('Initial position', function() {
     expect(chessjs.extension.isEnPassantPossible()).to.be.false;
   });
 
+  it('isEnPassantPossible2() => false', function() {
+    expect(chessjs.extension.isEnPassantPossible2()).to.be.false;
+  });
+
   it('getNormalizedFen() => 3 parts', function() {
     expect(chessjs.extension.getNormalizedFen()).to.equal('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq');
   });
@@ -68,6 +72,10 @@ describe('Position where e.p. exists in standard fen and is possible', function(
 
   it('isEnPassantPossible() => true', function() {
     expect(chessjs.extension.isEnPassantPossible()).to.be.true;
+  });
+
+  it('isEnPassantPossible2() => true', function() {
+    expect(chessjs.extension.isEnPassantPossible2()).to.be.true;
   });
 
   it('getNormalizedFen() => 4 parts', function() {
@@ -91,6 +99,10 @@ describe('Position where e.p. exists in standard fen and is not possible', funct
     expect(chessjs.extension.isEnPassantPossible()).to.be.false;
   });
 
+  it('isEnPassantPossible2() => false', function() {
+    expect(chessjs.extension.isEnPassantPossible2()).to.be.false;
+  });
+
   it('getNormalizedFen() => 3 parts', function() {
     expect(chessjs.extension.getNormalizedFen()).to.equal('rn1qkb1r/ppp1p1pp/3p4/3n1p2/3P2b1/5N2/PPP1BPPP/RNBQK2R w KQkq');
   });
@@ -107,6 +119,10 @@ describe('Position with a-file e.p. square', function() {
   it('isEnPassantPossible() => false', function() {
     expect(chessjs.extension.isEnPassantPossible()).to.be.false;
   });
+
+  it('isEnPassantPossible2() => false', function() {
+    expect(chessjs.extension.isEnPassantPossible2()).to.be.false;
+  });
 });
 
 describe('Position with h-file e.p. square', function() {
@@ -119,6 +135,11 @@ describe('Position with h-file e.p. square', function() {
 
   it('isEnPassantPossible() => false', function() {
     expect(chessjs.extension.isEnPassantPossible()).to.be.false;
+  });
+
+
+  it('isEnPassantPossible2() => false', function() {
+    expect(chessjs.extension.isEnPassantPossible2()).to.be.false;
   });
 });
 
@@ -133,6 +154,10 @@ describe('Position where e.p. is not possible because it\'s an illegal move (wou
   it('isEnPassantPossible() => false [currently an issue - solution probably has to be to try e.p. move to see if it\'s possible]', function() {
     expect(chessjs.extension.isEnPassantPossible()).to.be.false;
   });
+
+  it('isEnPassantPossible2() => false', function() {
+    expect(chessjs.extension.isEnPassantPossible2()).to.be.false;
+  });
 });
 
 describe('Position where e.p. is not possible because it\'s an illegal move (would leave the mover in check 2)', function() {
@@ -145,6 +170,10 @@ describe('Position where e.p. is not possible because it\'s an illegal move (wou
 
   it('isEnPassantPossible() => false [currently an issue - solution probably has to be to try e.p. move to see if it\'s possible]', function() {
     expect(chessjs.extension.isEnPassantPossible()).to.be.false;
+  });
+
+  it('isEnPassantPossible2() => false', function() {
+    expect(chessjs.extension.isEnPassantPossible2()).to.be.false;
   });
 });
 
@@ -207,7 +236,7 @@ describe('loadFlexibleFen()', function() {
     });
   });
 
-  describe('En passant possible', function() {
+  describe('getNormalizedFen()', function() {
     var chessjs;
     var fen3parts = 'rn1qkb1r/ppp1p1pp/3p4/3nPp2/3P2b1/5N2/PPP1BPPP/RNBQK2R w KQkq';
     var fen4parts = 'rn1qkb1r/ppp1p1pp/3p4/3nPp2/3P2b1/5N2/PPP1BPPP/RNBQK2R w KQkq f6';
